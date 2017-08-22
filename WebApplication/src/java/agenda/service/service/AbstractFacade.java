@@ -3,17 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package agenda.service;
+package agenda.service.service;
 
 import java.util.List;
 import javax.persistence.EntityManager;
 
 /**
  *
- * @author JF
+ * @author Jessica
  */
 public abstract class AbstractFacade<T> {
-
     private Class<T> entityClass;
 
     public AbstractFacade(Class<T> entityClass) {
