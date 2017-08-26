@@ -92,13 +92,10 @@ public class HijoFacadeREST extends AbstractFacade<Hijo> {
     }
     
     @GET
-    @Path("id")
+    @Path("hijos/{idpadre}")
     @Produces({MediaType.APPLICATION_JSON})
-      public List<Hijo> consultarhijos(@PathParam("id") Integer id) {
-        EntityManager em = this.getEntityManager();
-        String sql = "select * from hijo where  id_usuario =" +id;
-        Query query = em.createQuery(sql);
-        return (List<Hijo>) query.getResultList();
+    public String obtenerHijos(@PathParam("idpadre") Integer idpadre){
+        return super.obtenerHijos(idpadre);
     }
     
  

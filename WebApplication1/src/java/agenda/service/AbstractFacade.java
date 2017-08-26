@@ -61,4 +61,9 @@ public abstract class AbstractFacade<T> {
         return ((Long) q.getSingleResult()).intValue();
     }
     
+    public String obtenerHijos(Integer idpadre){
+        return getEntityManager().createNativeQuery("SELECT to_json(h.*) from hijo h WHERE h.id_padre = "+idpadre+"")
+                .getResultList().toString();
+    }
+    
 }
