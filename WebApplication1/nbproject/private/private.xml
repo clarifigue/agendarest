@@ -3,8 +3,11 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/Users/Jessica/Documents/NetBeansProjects/WebApplication1/src/java/agenda/service/UsuarioFacadeREST.java</file>
-            <file>file:/C:/Users/Jessica/Documents/NetBeansProjects/WebApplication1/web/index.html</file>
+            <file>file:/C:/Users/Auxiliadora/Desktop/agenda/agendarest/WebApplication1/src/java/agenda/service/UsuarioFacadeREST.java</file>
+            <file>file:/C:/Users/Auxiliadora/Desktop/agenda/agendarest/WebApplication1/src/java/agenda/service/AbstractFacade.java</file>
+            <file>file:/C:/Users/Auxiliadora/Desktop/agenda/agendarest/WebApplication1/src/java/agenda/service/HijoFacadeREST.java</file>
+            <file>file:/C:/Users/Auxiliadora/Desktop/agenda/agendarest/WebApplication1/src/java/agenda/service/ApplicationConfig.java</file>
+            <file>file:/C:/Users/Auxiliadora/Desktop/agenda/agendarest/WebApplication1/src/java/agenda/Hijo.java</file>
         </group>
     </open-files>
 </project-private>

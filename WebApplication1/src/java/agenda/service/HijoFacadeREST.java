@@ -11,6 +11,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -89,5 +90,19 @@ public class HijoFacadeREST extends AbstractFacade<Hijo> {
         em = Persistence.createEntityManagerFactory("WebApplication1PU").createEntityManager();
         return em;
     }
+    
+    @GET
+    @Path("id")
+    @Produces({MediaType.APPLICATION_JSON})
+      public List<Hijo> consultarhijos(@PathParam("id") Integer id) {
+        EntityManager em = this.getEntityManager();
+        String sql = "select * from hijo where  id_usuario =" +id;
+        Query query = em.createQuery(sql);
+        return (List<Hijo>) query.getResultList();
+    }
+    
+ 
+  
+
     
 }
