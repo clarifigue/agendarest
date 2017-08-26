@@ -5,7 +5,7 @@
  */
 package agenda.service;
 
-import agenda.Usuario;
+import agenda.Hijo;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -26,27 +26,27 @@ import javax.ws.rs.core.MediaType;
  * @author Auxiliadora
  */
 @Stateless
-@Path("usuario")
-public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
+@Path("hijo")
+public class HijoFacadeREST extends AbstractFacade<Hijo> {
 
     //@PersistenceContext(unitName = "WebApplication1PU")
     private EntityManager em;
 
-    public UsuarioFacadeREST() {
-        super(Usuario.class);
+    public HijoFacadeREST() {
+        super(Hijo.class);
     }
 
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Usuario entity) {
+    public void create(Hijo entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Usuario entity) {
+    public void edit(@PathParam("id") Integer id, Hijo entity) {
         super.edit(entity);
     }
 
@@ -59,21 +59,21 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Usuario find(@PathParam("id") Integer id) {
+    public Hijo find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario> findAll() {
+    public List<Hijo> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Usuario> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Hijo> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 

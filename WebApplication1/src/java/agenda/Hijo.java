@@ -6,36 +6,34 @@
 package agenda;
 
 import java.io.Serializable;
-import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
- * @author Jessica
+ * @author Auxiliadora
  */
 @Entity
-@Table(name = "usuario")
+@Table(name = "hijo")
 @XmlRootElement
 @NamedQueries({
-    @NamedQuery(name = "Usuario.findAll", query = "SELECT u FROM Usuario u")
-    , @NamedQuery(name = "Usuario.findById", query = "SELECT u FROM Usuario u WHERE u.id = :id")
-    , @NamedQuery(name = "Usuario.findByNombre", query = "SELECT u FROM Usuario u WHERE u.nombre = :nombre")
-    , @NamedQuery(name = "Usuario.findByCorreo", query = "SELECT u FROM Usuario u WHERE u.correo = :correo")})
-public class Usuario implements Serializable {
-
-    @OneToMany(mappedBy = "idPadre")
-    private Collection<Hijo> hijoCollection;
+    @NamedQuery(name = "Hijo.findAll", query = "SELECT h FROM Hijo h")
+    , @NamedQuery(name = "Hijo.findById", query = "SELECT h FROM Hijo h WHERE h.id = :id")
+    , @NamedQuery(name = "Hijo.findByNombre", query = "SELECT h FROM Hijo h WHERE h.nombre = :nombre")
+    , @NamedQuery(name = "Hijo.findBySexo", query = "SELECT h FROM Hijo h WHERE h.sexo = :sexo")
+    , @NamedQuery(name = "Hijo.findByEdad", query = "SELECT h FROM Hijo h WHERE h.edad = :edad")})
+public class Hijo implements Serializable {
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -43,15 +41,23 @@ public class Usuario implements Serializable {
     @Basic(optional = false)
     @Column(name = "id")
     private Integer id;
+    @Size(max = 32)
     @Column(name = "nombre")
     private String nombre;
-    @Column(name = "correo")
-    private String correo;
+    @Size(max = 1)
+    @Column(name = "sexo")
+    private String sexo;
+    @Size(max = 2147483647)
+    @Column(name = "edad")
+    private String edad;
+    @JoinColumn(name = "id_padre", referencedColumnName = "id")
+    @ManyToOne
+    private Usuario idPadre;
 
-    public Usuario() {
+    public Hijo() {
     }
 
-    public Usuario(Integer id) {
+    public Hijo(Integer id) {
         this.id = id;
     }
 
@@ -71,12 +77,28 @@ public class Usuario implements Serializable {
         this.nombre = nombre;
     }
 
-    public String getCorreo() {
-        return correo;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setCorreo(String correo) {
-        this.correo = correo;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getEdad() {
+        return edad;
+    }
+
+    public void setEdad(String edad) {
+        this.edad = edad;
+    }
+
+    public Usuario getIdPadre() {
+        return idPadre;
+    }
+
+    public void setIdPadre(Usuario idPadre) {
+        this.idPadre = idPadre;
     }
 
     @Override
@@ -89,10 +111,10 @@ public class Usuario implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
+        if (!(object instanceof Hijo)) {
             return false;
         }
-        Usuario other = (Usuario) object;
+        Hijo other = (Hijo) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -101,16 +123,7 @@ public class Usuario implements Serializable {
 
     @Override
     public String toString() {
-        return "agenda.Usuario[ id=" + id + " ]";
-    }
-
-    @XmlTransient
-    public Collection<Hijo> getHijoCollection() {
-        return hijoCollection;
-    }
-
-    public void setHijoCollection(Collection<Hijo> hijoCollection) {
-        this.hijoCollection = hijoCollection;
+        return "agenda.Hijo[ id=" + id + " ]";
     }
     
 }
