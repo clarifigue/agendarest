@@ -6,6 +6,7 @@
 package agenda;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -16,9 +17,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 
 /**
  *
@@ -34,6 +37,9 @@ import javax.xml.bind.annotation.XmlRootElement;
     , @NamedQuery(name = "Hijo.findBySexo", query = "SELECT h FROM Hijo h WHERE h.sexo = :sexo")
     , @NamedQuery(name = "Hijo.findByEdad", query = "SELECT h FROM Hijo h WHERE h.edad = :edad")})
 public class Hijo implements Serializable {
+
+    @OneToMany(mappedBy = "idHijo")
+    private Collection<Vacuna> vacunaCollection;
 
     private static final long serialVersionUID = 1L;
     @Id
@@ -124,6 +130,15 @@ public class Hijo implements Serializable {
     @Override
     public String toString() {
         return "agenda.Hijo[ id=" + id + " ]";
+    }
+
+    @XmlTransient
+    public Collection<Vacuna> getVacunaCollection() {
+        return vacunaCollection;
+    }
+
+    public void setVacunaCollection(Collection<Vacuna> vacunaCollection) {
+        this.vacunaCollection = vacunaCollection;
     }
     
 }

@@ -23,13 +23,13 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author Auxiliadora
+ * @author CF
  */
 @Stateless
 @Path("usuario")
 public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
 
-    //@PersistenceContext(unitName = "WebApplication1PU")
+    @PersistenceContext(unitName = "WebApplication1PU")
     private EntityManager em;
 
     public UsuarioFacadeREST() {

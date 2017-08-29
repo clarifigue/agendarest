@@ -5,7 +5,7 @@
  */
 package agenda.service;
 
-import agenda.Hijo;
+import agenda.Vacuna;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -23,34 +23,30 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author JF
+ * @author CF
  */
 @Stateless
-@Path("hijo")
-public class HijoFacadeREST extends AbstractFacade<Hijo> {
+@Path("vacuna")
+public class VacunaFacadeREST extends AbstractFacade<Vacuna> {
 
     @PersistenceContext(unitName = "WebApplication1PU")
     private EntityManager em;
 
-    public HijoFacadeREST() {
-        super(Hijo.class);
+    public VacunaFacadeREST() {
+        super(Vacuna.class);
     }
 
-    /**
-     *
-     * @param entity
-     */
     @POST
     @Override
     @Consumes({MediaType.APPLICATION_JSON})
-    public void create(Hijo entity) {
+    public void create(Vacuna entity) {
         super.create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({MediaType.APPLICATION_JSON})
-    public void edit(@PathParam("id") Integer id, Hijo entity) {
+    public void edit(@PathParam("id") Integer id, Vacuna entity) {
         super.edit(entity);
     }
 
@@ -63,21 +59,21 @@ public class HijoFacadeREST extends AbstractFacade<Hijo> {
     @GET
     @Path("{id}")
     @Produces({MediaType.APPLICATION_JSON})
-    public Hijo find(@PathParam("id") Integer id) {
+    public Vacuna find(@PathParam("id") Integer id) {
         return super.find(id);
     }
 
     @GET
     @Override
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Hijo> findAll() {
+    public List<Vacuna> findAll() {
         return super.findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({MediaType.APPLICATION_JSON})
-    public List<Hijo> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
+    public List<Vacuna> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
         return super.findRange(new int[]{from, to});
     }
 
@@ -95,9 +91,9 @@ public class HijoFacadeREST extends AbstractFacade<Hijo> {
     }
     
     @GET
-    @Path("hijos/{idpadre}")
+    @Path("vacunas/{idhijo}")
     @Produces({MediaType.APPLICATION_JSON})
-    public String obtenerHijos(@PathParam("idpadre") Integer idpadre){
-        return super.obtenerHijos(idpadre);
+    public String obtenerVacunas(@PathParam("idhijo") Integer idhijo){
+        return super.obtenerVacunas(idhijo);
     }
 }

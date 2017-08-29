@@ -66,4 +66,8 @@ public abstract class AbstractFacade<T> {
                 .getResultList().toString();
     }
     
+    public String obtenerVacunas(Integer idhijo){
+        return getEntityManager().createNativeQuery("SELECT to_json(v.*) from vacuna v WHERE v.id_hijo = "+idhijo+"")
+                .getResultList().toString();
+    }
 }

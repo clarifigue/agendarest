@@ -31,6 +31,7 @@ public class ApplicationConfig extends Application {
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(agenda.service.HijoFacadeREST.class);
         resources.add(agenda.service.UsuarioFacadeREST.class);
+        resources.add(agenda.service.VacunaFacadeREST.class);
     }
     
 }
