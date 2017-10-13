@@ -5,8 +5,13 @@
  */
 package agenda.service;
 
+import java.io.IOException;
+import java.io.StringWriter;
+import java.text.ParseException;
 import java.util.List;
 import javax.persistence.EntityManager;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 
 /**
  *
@@ -70,4 +75,51 @@ public abstract class AbstractFacade<T> {
         return getEntityManager().createNativeQuery("SELECT to_json(v.*) from vacuna v WHERE v.id_hijo = "+idhijo+"")
                 .getResultList().toString();
     }
+    
+    public String validarUsuario(String email) throws IOException, ParseException, org.json.simple.parser.ParseException {
+
+        JSONObject obj = new JSONObject();
+
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(email);
+
+        JSONObject jsonObject = (JSONObject) json;
+        String emailConsulta = (String) jsonObject.get("email");
+        
+        boolean valido = getEntityManager().createNativeQuery("SELECT * FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+                .getResultList().isEmpty();
+        
+        String nombre = getEntityManager().createNativeQuery("SELECT nombre FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+                .getResultList().toString();
+        
+        String id = getEntityManager().createNativeQuery("SELECT id_usuario FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+                .getResultList().toString();
+        
+        String nombreParaObjeto = nombre.substring(1,nombre.length()-1);
+        
+        String idParaObjeto = id.substring(1,2);
+        
+        if (valido) {
+
+            obj.put("valido", false);
+            obj.put("email", emailConsulta);
+            obj.put("nombre", nombreParaObjeto);
+            obj.put("idUsuario", idParaObjeto);
+            
+        } else {
+            obj.put("valido", true);
+            obj.put("email", emailConsulta);
+            obj.put("nombre", nombreParaObjeto);
+            obj.put("idUsuario", idParaObjeto);
+            
+        }
+
+        StringWriter out = new StringWriter();
+        obj.writeJSONString(out);
+
+        String jsonText = out.toString();
+
+        return jsonText;
+    }
+    
 }

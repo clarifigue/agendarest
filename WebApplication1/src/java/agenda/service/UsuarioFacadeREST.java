@@ -6,6 +6,8 @@
 package agenda.service;
 
 import agenda.Usuario;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -88,6 +90,14 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
     protected EntityManager getEntityManager() {
         em = Persistence.createEntityManagerFactory("WebApplication1PU").createEntityManager();
         return em;
+    }
+    
+        @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("validarUsuario")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String findMail(String email) throws IOException, ParseException, org.json.simple.parser.ParseException {
+        return super.validarUsuario(email);
     }
     
 }
