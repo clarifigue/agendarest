@@ -23,7 +23,7 @@ import javax.ws.rs.core.MediaType;
 
 /**
  *
- * @author JF
+ * @author CF
  */
 @Stateless
 @Path("hijo")
