@@ -12,6 +12,7 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import agenda.Usuario;
 
 /**
  *
@@ -86,27 +87,41 @@ public abstract class AbstractFacade<T> {
         JSONObject jsonObject = (JSONObject) json;
         String emailConsulta = (String) jsonObject.get("email");
         
-        boolean valido = getEntityManager().createNativeQuery("SELECT * FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
-                .getResultList().isEmpty();
+        boolean valido = true;
         
-        String nombre = getEntityManager().createNativeQuery("SELECT nombre FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
-                .getResultList().toString();
+        Object resultado = getEntityManager().createNamedQuery("Usuario.findByCorreo").setParameter("correo",emailConsulta)
+                .getSingleResult();
+       
+       String id = "";
+       String nombre = "";
         
-        String id = getEntityManager().createNativeQuery("SELECT id_usuario FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
-                .getResultList().toString();
+       if (resultado == null) {
+            valido = false;
+       } else {
+               id = ((Usuario)resultado).getId().toString();
+               nombre = ((Usuario)resultado).getNombre();
+               
+           
+       }
         
-        String nombreParaObjeto = nombre.substring(1,nombre.length()-1);
-        
-        String idParaObjeto = id.substring(1,2);
-        
-        if (valido) {
+       
+//        String nombre = getEntityManager().createNativeQuery("SELECT nombre FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+//                .getResultList().toString();
+//        
+//        String id = getEntityManager().createNativeQuery("SELECT id FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+//                .getResultList().toString();
+       
+
+               
+        if (!valido) {
 
             obj.put("valido", false);
-            obj.put("email", emailConsulta);
-            obj.put("nombre", nombreParaObjeto);
-            obj.put("idUsuario", idParaObjeto);
+           
             
         } else {
+            String nombreParaObjeto = nombre;
+        
+            String idParaObjeto = id;
             obj.put("valido", true);
             obj.put("email", emailConsulta);
             obj.put("nombre", nombreParaObjeto);
@@ -120,6 +135,24 @@ public abstract class AbstractFacade<T> {
         String jsonText = out.toString();
 
         return jsonText;
+    }
+    
+    
+    public String obtenerHijosPost(String email) throws IOException, ParseException, org.json.simple.parser.ParseException {
+        
+        /*convierte objetos tipo string a Json*/
+        JSONObject obj = new JSONObject();
+
+        JSONParser parser = new JSONParser();
+        JSONObject json = (JSONObject) parser.parse(email);
+
+        JSONObject jsonObject = (JSONObject) json;
+        String idPadre = (String) jsonObject.get("idPadre");
+        
+        /*consulta para recuperar los hijos de acuerdo al id del padre*/
+        return getEntityManager().createNativeQuery("SELECT to_json(c.*) FROM hijo c WHERE c.id_padre = '"+idPadre+"'")
+                .getResultList().toString();
+
     }
     
 }

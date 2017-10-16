@@ -6,6 +6,8 @@
 package agenda.service;
 
 import agenda.Hijo;
+import java.io.IOException;
+import java.text.ParseException;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -99,5 +101,14 @@ public class HijoFacadeREST extends AbstractFacade<Hijo> {
     @Produces({MediaType.APPLICATION_JSON})
     public String obtenerHijos(@PathParam("idpadre") Integer idpadre){
         return super.obtenerHijos(idpadre);
+    }
+    
+    
+    @POST
+    @Consumes({MediaType.APPLICATION_JSON})
+    @Path("obtenerHijosPost")
+    @Produces({MediaType.APPLICATION_JSON})
+    public String findMail(String padre) throws IOException, ParseException, org.json.simple.parser.ParseException {
+        return super.obtenerHijosPost(padre);
     }
 }

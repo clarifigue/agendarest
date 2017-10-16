@@ -92,7 +92,7 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return em;
     }
     
-        @POST
+    @POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("validarUsuario")
     @Produces({MediaType.APPLICATION_JSON})
