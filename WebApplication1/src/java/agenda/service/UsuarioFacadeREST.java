@@ -13,6 +13,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -22,6 +23,8 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 /**
  *
@@ -92,12 +95,87 @@ public class UsuarioFacadeREST extends AbstractFacade<Usuario> {
         return em;
     }
     
-    @POST
+    /*@POST
     @Consumes({MediaType.APPLICATION_JSON})
     @Path("validarUsuario")
     @Produces({MediaType.APPLICATION_JSON})
     public String findMail(String email) throws IOException, ParseException, org.json.simple.parser.ParseException {
         return super.validarUsuario(email);
-    }
+    }*/
     
+    @POST
+    @Path("validarUsuario")
+    @Consumes({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+    @Produces({MediaType.APPLICATION_JSON, MediaType.TEXT_PLAIN})
+    public Response findMail(String email) throws IOException, ParseException, org.json.simple.parser.ParseException {
+        
+        if (email == null){
+            return Response.status(Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
+        }
+        Query q = getEntityManager().createNativeQuery("SELECT u.id FROM Usuario u WHERE u.correo = ?");
+        q.setParameter(1, email);
+        try{
+            Object res = q.getSingleResult();
+            return Response.ok(res.toString()).header("Access-Control-Allow-Origin", "*").build();
+        }
+        catch (Exception e){
+            return Response.status(Status.NOT_FOUND).header("Access-Control-Allow-Origin", "*").build();
+        }
+        
+    //return super.validarUsuario(intento);
+        //JSONObject obj = new JSONObject();
+        //JSONParser parser = new JSONParser();
+        //JSONObject json = (JSONObject) parser.parse(email);
+
+        //JSONObject jsonObject = (JSONObject) json;
+        //String emailConsulta = (String) jsonObject.get("email");
+        
+        //String emailConsulta = intento.getEmail();
+        /*
+        boolean valido = true;
+        Object resultado;
+        try{
+            resultado = getEntityManager().createNamedQuery("Usuario.findByCorreo").setParameter("correo",email)
+                    .getSingleResult();
+        }catch(Exception e){
+            return "No existe el usuario";
+        }
+        String id = "";
+        String nombre = "";
+        
+        if (resultado == null) {
+            valido = false;
+        } else {
+            id = ((Usuario)resultado).getId().toString();
+            nombre = ((Usuario)resultado).getNombre();
+        }
+        
+       
+//        String nombre = getEntityManager().createNativeQuery("SELECT nombre FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+//                .getResultList().toString();
+//        
+//        String id = getEntityManager().createNativeQuery("SELECT id FROM Usuario u WHERE u.correo = '" + emailConsulta + "'")
+//                .getResultList().toString();
+       
+
+               
+        if (!valido) {
+
+            obj.put("valido", false);
+        } else {
+            String nombreParaObjeto = nombre;
+        
+            String idParaObjeto = id;
+            obj.put("valido", true);
+            obj.put("email", email);
+            obj.put("nombre", nombreParaObjeto);
+            obj.put("idUsuario", idParaObjeto);
+        }
+
+        StringWriter out = new StringWriter();
+        obj.writeJSONString(out);
+
+        String jsonText = out.toString();
+        return jsonText;*/
+    }  
 }
